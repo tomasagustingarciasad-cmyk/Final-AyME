@@ -1,21 +1,52 @@
-b_l=0.2;%%%%
-m=1;
-L_cm =0.25;
-J_cm=0.0208;
-L_l=0.5;
-m_l=1.5;%%%%
-Tld=2.5;
-k_l=m*L_cm+m_l*L_l;
-r=120/1;
-J_l=(m*(L_cm^2)+J_cm)+m_l*(L_l^2);
-g=9.8;
-P_p=3;
-lambda_m=0.016;
-L_q=5.8;
-L_d=6.6;
-L_ls=0.8;
-R_sREF=1.02;
-alpha_cu=3.9*10^-3;
-C_ts=0.818;
-R_ts_amb=146.7;
-tau_ts_amb=R_ts_amb*C_ts;
+% CONDICIONES INICIALES %
+tita0 = 0;
+wm0 = 0;
+iq0 = 0;
+id0 = -0.5;
+io0 = 0;
+Ts0 = 40;
+
+
+% MODELO DE LA CARGA %
+g = 9.80665;                        %m/s^2      Gravedad
+b_l = 0.1;%%%%                      %N.m/rad/s  Coeficiente de fricción de la articulación
+m = 1;                              %kg         Masa del brazo
+L_cm = 0.25;                        %m          Distancia de la articulación al centro de masa del brazo
+J_cm=0.0208;                        %kg.m^2     Momento de inercia del brazo
+L_l = 0.5;                          %m          Longitud total del brazo
+m_l = 1.5;%%%%                      %kg         Puede variar entre 0 y 1.5kg, masa que recoge el brazo
+J_l=(m*(L_cm^2)+J_cm)+m_l*(L_l^2);  %kg.m^2     Momento de inercia total del brazo mas la carga
+k_l = m * L_cm + m_l * L_l;         %kg.m       Constante para calcular momento debido al peso del brazo y de la carga
+T_ld = 2.5;  %%%%                   %N.m        Puede variar entre 0 y 5N.m, torque de carga
+
+
+
+% CAJA REDUCTORA %
+r = 120/1;                          %Relación de transmisión de la caja reductora
+
+
+
+% PARÁMETROS: tolerancia error +/- 1% %
+J_m = 14.0*10^-6;                   %kg.m^2   Momento de inercia (motor y caja) 
+b_m = 15.0*10^-6;                   %N*m/rad/s   Coef. de fricción viscosa (motor y caja)
+P_p = 3;                            %Pares de polos del estator
+lambda_m = 0.016;                   %V/rad/s    Flujo magnetico equivalente de imanes concatenado por espiras del bobinado del estator
+L_q=5.8 * 10^(-3);                  %H          Inductancia de estator (eje en cuadratura)
+L_d = 6.6 * 10^(-3);                %H          Inductancia del estator (eje directo)
+L_ls = 0.8 * 10^(-3);               %H          Inductancia de dispersión de estator
+R_sREF=1.02;                        %Ohm        Resistencia de estator por fase a 20ºC (Rs)
+alpha_cu=3.9*10^-3;                 %1/ºC       Coeficiente de aumento de la resistencia Rs con T°
+C_ts=0.818;                         %W/ºC/s     Capacitancia termica del estator
+R_ts_amb=146.7;                     %ºC/W       Resistencia termica entre el estator y el ambiente
+tau_ts_amb=R_ts_amb*C_ts;           %s          Constante de tiempo del sistema térmico
+
+
+
+% PARAMETROS EQUIVALENTES DEL SISTEMA MOTOR + CAJA + CARGA %
+J_eq = J_m + J_l/(r^2);
+b_eq = b_m + b_l/(r^2);
+
+
+% ESPECIFICACIONES DE OPERACIÓN
+T_amb = 40;%%%%%%%%%%%              %°C      Rango de temperatura ambiente: −15°𝐶≤𝑇𝑎𝑚𝑏° (𝑡)≤40°C
+
