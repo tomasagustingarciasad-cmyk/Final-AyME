@@ -1,8 +1,9 @@
+clc, clear
 % CONDICIONES INICIALES %
 tita0 = 0;
 wm0 = 0;
 iq0 = 0;
-id0 = -0.5;
+id0 = 1;
 io0 = 0;
 Ts0 = 40;
 
@@ -17,7 +18,7 @@ L_l = 0.5;                          %m          Longitud total del brazo
 m_l = 1.5;%%%%                      %kg         Puede variar entre 0 y 1.5kg, masa que recoge el brazo
 J_l=(m*(L_cm^2)+J_cm)+m_l*(L_l^2);  %kg.m^2     Momento de inercia total del brazo mas la carga
 k_l = m * L_cm + m_l * L_l;         %kg.m       Constante para calcular momento debido al peso del brazo y de la carga
-T_ld = 2.5;  %%%%                   %N.m        Puede variar entre 0 y 5N.m, torque de carga
+%T_ld = 2.5;  (Ver especificaciones de operación)
 
 
 
@@ -50,3 +51,27 @@ b_eq = b_m + b_l/(r^2);
 % ESPECIFICACIONES DE OPERACIÓN
 T_amb = 40;%%%%%%%%%%%              %°C      Rango de temperatura ambiente: −15°𝐶≤𝑇𝑎𝑚𝑏° (𝑡)≤40°C
 
+
+
+
+% Cálculo de Rs a la temperatura inicial (Ts0)
+R_s_actual = R_sREF * (1 + alpha_cu * (Ts0 - 20));
+
+
+
+
+% ESPECIFICACIONES DE OPERACIÓN
+T_ld = 2.5;  %%%%                   %N.m        Puede variar entre -5 y 5 N.m, torque de carga (Asumir funcion escalon)
+nl_nom = 2*pi; %(60 rpm)            %rad/s      Velocidad nominal (salida)
+Tq_nom = 17;                        %Nm         Torque nominal (salida)
+Tq_max = 45;                        %Nm         Torque pico (salida) (corta duracion, aceleracion)
+nm_nom = 691.15;                    %rad/s      Velocidad nominal rotor (6600rpm)
+V_sl_nom = 30;                      %V          Tensión nominal de línea
+Vflnom = V_sl_nom/sqrt(3);          %V          Tensión nominal de fase
+Isnom = 0.4;                        %A          Corriente nominal (regimen continuo)
+Ismax = 2;                          %A          Corriente máxima (corta duración)
+Tsmax = 115;                        %°C         Tenperatura maxima
+%Rango de temperatura ambiente −15°𝐶≤𝑇𝑎𝑚𝑏° (𝑡)≤40°C
+Vslmax = 48;                        %V          Módulo de tensión de línea máximo
+Vsat = Vslmax * sqrt(2) / sqrt(3);  %V          Limite de saturación
+femax = 330;                        %Hz         Frecuencia síncrona máxima (rango de -330 a 330)
