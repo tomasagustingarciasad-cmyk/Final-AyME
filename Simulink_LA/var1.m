@@ -15,7 +15,7 @@ m = 1;                              %kg         Masa del brazo
 L_cm = 0.25;                        %m          Distancia de la articulación al centro de masa del brazo
 J_cm=0.0208;                        %kg.m^2     Momento de inercia del brazo
 L_l = 0.5;                          %m          Longitud total del brazo
-m_l = 1.5;%%%%                      %kg         Puede variar entre 0 y 1.5kg, masa que recoge el brazo
+m_l = 0;%%%%                        %kg         Puede variar entre 0 y 1.5kg, masa que recoge el brazo
 J_l=(m*(L_cm^2)+J_cm)+m_l*(L_l^2);  %kg.m^2     Momento de inercia total del brazo mas la carga
 k_l = m * L_cm + m_l * L_l;         %kg.m       Constante para calcular momento debido al peso del brazo y de la carga
 %T_ld = 2.5;  (Ver especificaciones de operación)
@@ -44,8 +44,8 @@ tau_ts_amb=R_ts_amb*C_ts;           %s          Constante de tiempo del sistema 
 
 
 % PARAMETROS EQUIVALENTES DEL SISTEMA MOTOR + CAJA + CARGA %
-J_eq = J_m + J_l/(r^2);
-b_eq = b_m + b_l/(r^2);
+J_eq = J_m + J_l/(r^2)
+b_eq = b_m + b_l/(r^2)
 
 
 % ESPECIFICACIONES DE OPERACIÓN
