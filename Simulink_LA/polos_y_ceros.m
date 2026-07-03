@@ -94,6 +94,8 @@ disp("Polos de la función de tranferencia 20°C:");
 disp(pole(H));
 disp("Ceros de la función de tranferencia 20°C:");
 disp(zero(H));
+disp('--- Parámetros del Sistema 20° ---');
+damp(H); 
 % Generación de la figura y gráfica del mapa de polos y ceros
 figure;
 hold on;
@@ -123,7 +125,10 @@ hold off;
 % =========================================================================
 % BARRIDO DE TEMPERATURA Y CÁLCULO DE MIGRACIÓN
 % =========================================================================
-
+disp("---------------------------------------------------------------------------------------------------");
+disp("---------------------------------------------------------------------------------------------------");
+disp("---------------------------------------------------------------------------------------------------");
+disp("BARRIDO DE TEMPERATURA Y CÁLCULO DE MIGRACIÓN");
 % Rango de temperaturas desde -15°C hasta 115°C (según tus especificaciones)
 T_vec = -15:1:115; 
 
@@ -217,7 +222,8 @@ disp("Polos de la función de tranferencia -15°C:");
 disp(pole(H15));
 disp("Ceros de la función de tranferencia -15°C:");
 disp(zero(H15));
-
+disp('--- Parámetros del Sistema -15° ---');
+damp(H15); 
 %---------------------------------------------------------------------------------------------------
 R_s40 = R_sREF * (1 + alpha_cu * (40 - 20));
 disp("La resistencia a 40°C es:");
@@ -236,6 +242,8 @@ disp("Polos de la función de tranferencia 40°C:");
 disp(pole(H40));
 disp("Ceros de la función de tranferencia 40°C:");
 disp(zero(H40));
+disp('--- Parámetros del Sistema 40° ---');
+damp(H40); 
 
 %---------------------------------------------------------------------------------------------------
 R_s115 = R_sREF * (1 + alpha_cu * (115 - 20));
@@ -255,9 +263,99 @@ disp("Polos de la función de tranferencia 115°C:");
 disp(pole(H115));
 disp("Ceros de la función de tranferencia 115°C:");
 disp(zero(H115));
+disp('--- Parámetros del Sistema 115° ---');
+damp(H115); 
+disp("---------------------------------------------------------------------------------------------------");
+disp("---------------------------------------------------------------------------------------------------");
+disp("---------------------------------------------------------------------------------------------------");
+disp("BARRIDO DE COEF DE FRICCIÓN VISCOSA");
 
-%---------------------------------------------------------------------------------------------------
+b_l_vec = 0.07:0.03:0.13;
+polos_b = zeros(length(b_l_vec), 3);
+ceros_b = zeros(length(b_l_vec), 1);
+
+for i = 1:length(b_l_vec)
+    b_l_actual = b_l_vec(i);
+    b_eq_din = b_m + b_l_actual/(r^2);
+    
+    % Se utiliza R_sREF y J_eq nominales para aislar el efecto de b_eq_din
+    num_b = [L_q, R_sREF];
+    den_b = [(J_eq * L_q), (L_q * b_eq_din + J_eq * R_sREF), (R_sREF * b_eq_din + 1.5 * P_p^2 * lambda_m^2), 0];
+    
+    H_b = tf(num_b, den_b);
+    polos_b(i, :) = pole(H_b).';
+    ceros_b(i, :) = zero(H_b).';
 
 
+    disp("Parametros de la función de tranferencia de coef de friccion viscosa:");
+    disp(b_eq_din);
+    damp(H_b);
 
-%---------------------------------------------------------------------------------------------------
+end
+
+figure('Color', [1 1 1]);
+hold on; grid on;
+xline(0, '-k', 'LineWidth', 1.2, 'HandleVisibility', 'off'); 
+yline(0, '-k', 'LineWidth', 1.2, 'HandleVisibility', 'off');
+
+for p = 1:3
+    scatter(real(polos_b(:, p)), imag(polos_b(:, p)), 120, b_l_vec, 'filled', 'HandleVisibility', 'off');
+end
+scatter(real(ceros_b), imag(ceros_b), 120, b_l_vec, 'filled', 'HandleVisibility', 'off');
+plot(0, 0, 'kx', 'MarkerSize', 20, 'LineWidth', 2.5, 'DisplayName', 'Trayectorias');
+
+cb_b = colorbar;
+ylabel(cb_b, 'Coef. Friccion b_l [N.m/rad/s]', 'FontSize', 11, 'Interpreter', 'none');
+colormap(jet);
+title('Migración de Polos y Ceros con b_l', 'FontSize', 12, 'FontWeight', 'bold', 'Interpreter', 'none');
+xlabel('Re(s)', 'FontSize', 11); ylabel('Im(s)', 'FontSize', 11);
+axis auto;
+hold off;
+
+
+disp("---------------------------------------------------------------------------------------------------");
+disp("---------------------------------------------------------------------------------------------------");
+disp("---------------------------------------------------------------------------------------------------");
+disp("BARRIDO CARGA ÚTIL EN EL EXTREMO");
+m_l_vec = 0:0.5:1.5;
+polos_m = zeros(length(m_l_vec), 3);
+ceros_m = zeros(length(m_l_vec), 1);
+
+for i = 1:length(m_l_vec)
+    m_l_actual = m_l_vec(i);
+    J_l_din = (m*(L_cm^2)+J_cm) + m_l_actual*(L_l^2);
+    J_eq_din = J_m + J_l_din/(r^2);
+    
+    % Se utiliza R_sREF y b_eq nominales para aislar el efecto de J_eq_din
+    num_m = [L_q, R_sREF];
+    den_m = [(J_eq_din * L_q), (L_q * b_eq + J_eq_din * R_sREF), (R_sREF * b_eq + 1.5 * P_p^2 * lambda_m^2), 0];
+    
+    H_m = tf(num_m, den_m);
+    polos_m(i, :) = pole(H_m).';
+    ceros_m(i, :) = zero(H_m).';
+disp("Parametros de la función de tranferencia de masa :");
+disp((i-1)*0.5)
+disp(J_eq_din);
+
+damp(H_m);
+
+end
+
+figure('Color', [1 1 1]);
+hold on; grid on;
+xline(0, '-k', 'LineWidth', 1.2, 'HandleVisibility', 'off'); 
+yline(0, '-k', 'LineWidth', 1.2, 'HandleVisibility', 'off');
+
+for p = 1:3
+    scatter(real(polos_m(:, p)), imag(polos_m(:, p)), 120, m_l_vec, 'filled', 'HandleVisibility', 'off');
+end
+scatter(real(ceros_m), imag(ceros_m), 120, m_l_vec, 'filled', 'HandleVisibility', 'off');
+plot(0, 0, 'kx', 'MarkerSize', 20, 'LineWidth', 2.5, 'DisplayName', 'Trayectorias');
+
+cb_m = colorbar;
+ylabel(cb_m, 'Masa m_l [kg]', 'FontSize', 11, 'Interpreter', 'none');
+colormap(jet);
+title('Migración de Polos y Ceros con m_l', 'FontSize', 12, 'FontWeight', 'bold', 'Interpreter', 'none');
+xlabel('Re(s)', 'FontSize', 11); ylabel('Im(s)', 'FontSize', 11);
+axis auto;
+hold off;
