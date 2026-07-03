@@ -44,8 +44,8 @@ tau_ts_amb=R_ts_amb*C_ts;           %s          Constante de tiempo del sistema 
 
 
 % PARAMETROS EQUIVALENTES DEL SISTEMA MOTOR + CAJA + CARGA %
-J_eq = J_m + J_l/(r^2)
-b_eq = b_m + b_l/(r^2)
+J_eq = J_m + J_l/(r^2);
+b_eq = b_m + b_l/(r^2);
 
 
 % ESPECIFICACIONES DE OPERACIÓN
