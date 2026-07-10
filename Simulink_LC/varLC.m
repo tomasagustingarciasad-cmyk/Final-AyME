@@ -36,6 +36,7 @@ L_q=5.8 * 10^(-3);                  %H          Inductancia de estator (eje en c
 L_d = 6.6 * 10^(-3);                %H          Inductancia del estator (eje directo)
 L_ls = 0.8 * 10^(-3);               %H          Inductancia de dispersión de estator
 R_sREF=1.02;                        %Ohm        Resistencia de estator por fase a 20ºC (Rs)
+T_sREF = 20;
 alpha_cu=3.9*10^-3;                 %1/ºC       Coeficiente de aumento de la resistencia Rs con T°
 C_ts=0.818;                         %W/ºC/s     Capacitancia termica del estator
 R_ts_amb=146.7;                     %ºC/W       Resistencia termica entre el estator y el ambiente
