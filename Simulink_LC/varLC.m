@@ -3,7 +3,7 @@ clc, clear
 tita0 = 0;
 wm0 = 0;
 iq0 = 0;
-id0 = 1;
+id0 = 0.5;
 io0 = 0;
 Ts0 = 40;
 
