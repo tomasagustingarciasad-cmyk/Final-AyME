@@ -84,15 +84,10 @@ R_0=4;
 
 %PID
 
-w_n_PID=800;
-zeta_PID=0.75;
+omega_n=800;
+zeta
 
-b_a=J_eq*(2*zeta_PID+1)*w_n_PID;
-K_a=J_eq*(2*zeta_PID+1)*w_n_PID^2;
-K_ai=J_eq*w_n_PID^3;
-
-%Observador
-
-K_obs_theta=6400;
-K_obs_w=10240000;
+b_a=
+K_a=
+K_ai=
 

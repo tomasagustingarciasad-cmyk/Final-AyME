@@ -1,0 +1,9 @@
+numLA=[(L_q), (R_sREF)];
+denLA=[(J_eq * L_q), (L_q * b_eq + J_eq * R_sREF), (R_sREF * b_eq + 1.5 * P_p^2 * lambda_m^2), 0];
+numLi=[1];
+denLi=[R_q/L_q , 1];
+numLC=[b_a,K_a,K_ai];
+denLC=[J_eq,b_a,K_a,K_ai];
+HLA=tf(numLA,denLA);
+HLi=tf(numLi,denLi);
+HLC=tf(numLA,denLA);
