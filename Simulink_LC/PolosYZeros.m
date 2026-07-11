@@ -8,34 +8,6 @@ HLA=tf(numLA,denLA);
 HLi=tf(numLi,denLi);
 HLC=tf(numLC,denLC);
 
-% Generación de la figura y gráfica del mapa de polos de los 3 sistemas
-figure;
-hold on;
-grid on;
-
-% Dibujar ejes primero (así quedan de fondo y no interfieren con la leyenda)
-xline(0, '--k', 'LineWidth', 1, 'HandleVisibility', 'off'); % Eje y (Imaginario)
-yline(0, '--k', 'LineWidth', 1, 'HandleVisibility', 'off'); % Eje x (Real)
-
-% Dibujar polos del sistema HLA (rojo, cruz)
-plot(real(pole(HLA)), imag(pole(HLA)), 'rx', 'MarkerSize', 8, 'LineWidth', 1.5);
-
-% Dibujar polos del sistema HLi (verde, triángulo)
-plot(real(pole(HLi)), imag(pole(HLi)), 'g^', 'MarkerSize', 8, 'LineWidth', 1.5);
-
-% Dibujar polos del sistema HLC (violeta, cuadrado)
-plot(real(pole(HLC)), imag(pole(HLC)), 's', 'Color', [0.5 0 0.5], 'MarkerSize', 8, 'LineWidth', 1.5);
-
-title('Mapa de Polos - Sistema');
-xlabel('Eje Real');
-ylabel('Eje Imaginario');
-legend({'Polos LA', 'Polos Li', 'Polos LC'}, 'Location', 'best');
-
-% Fijar límites de los ejes manualmente (un poco más amplios que el rango de datos)
-xlim([-5500 500]);
-ylim([-2000 2000]);
-
-hold off;
 
 
 % --- Parámetros fijos ---
@@ -60,7 +32,7 @@ for i = 1:length(m_l_vec)
     p = pole(HLC_i);
     polos_LC(:,i) = p;
 end
-
+disp(p);
 % --- Gráfico del desplazamiento de polos ---
 figure;
 hold on;
@@ -95,3 +67,36 @@ cb.Label.String = 'm_l (kg)';
 caxis([0 1.5]);
 
 hold off;
+
+% Generación de la figura y gráfica del mapa de polos de los 3 sistemas
+figure;
+hold on;
+grid on;
+
+% Dibujar ejes primero (así quedan de fondo y no interfieren con la leyenda)
+xline(0, '--k', 'LineWidth', 1, 'HandleVisibility', 'off'); % Eje y (Imaginario)
+yline(0, '--k', 'LineWidth', 1, 'HandleVisibility', 'off'); % Eje x (Real)
+
+% Dibujar polos del sistema HLA (rojo, cruz)
+plot(real(pole(HLA)), imag(pole(HLA)), 'rx', 'MarkerSize', 8, 'LineWidth', 1.5);
+
+% Dibujar polos del sistema HLi (verde, triángulo)
+plot(real(pole(HLi)), imag(pole(HLi)), 'g^', 'MarkerSize', 8, 'LineWidth', 1.5);
+
+% Dibujar polos del sistema HLC (violeta, cuadrado)
+plot(real(pole(HLC)), imag(pole(HLC)), 's', 'Color', [0.5 0 0.5], 'MarkerSize', 8, 'LineWidth', 1.5);
+
+% Dibujar polos del sistema HLC (violeta, cuadrado)
+plot(real(p), imag(p), 'bo', 'Color', [0.5 0 0.5], 'MarkerSize', 8, 'LineWidth', 1.5);
+
+title('Mapa de Polos - Sistema');
+xlabel('Eje Real');
+ylabel('Eje Imaginario');
+legend({'Polos LA', 'Polos Li', 'Polos LC', 'Polos LC (m_l=1.5kg)'}, 'Location', 'best');
+
+% Fijar límites de los ejes manualmente (un poco más amplios que el rango de datos)
+xlim([-5500 500]);
+ylim([-2000 2000]);
+
+hold off;
+
