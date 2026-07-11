@@ -68,7 +68,7 @@ R_s_actual = R_sREF * (1 + alpha_cu * (Ts0 - 20));
 
 
 % ESPECIFICACIONES DE OPERACIÓN
-T_ld = 2.5;  %%%%                   %N.m        Puede variar entre -5 y 5 N.m, torque de carga (Asumir funcion escalon)
+T_ld = 5;  %%%%                   %N.m        Puede variar entre -5 y 5 N.m, torque de carga (Asumir funcion escalon)
 nl_nom = 2*pi; %(60 rpm)            %rad/s      Velocidad nominal (salida)
 Tq_nom = 17;                        %Nm         Torque nominal (salida)
 Tq_max = 45;                        %Nm         Torque pico (salida) (corta duracion, aceleracion)
