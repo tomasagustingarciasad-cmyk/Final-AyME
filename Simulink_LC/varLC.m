@@ -15,7 +15,7 @@ m = 1;                              %kg         Masa del brazo
 L_cm = 0.25;                        %m          Distancia de la articulación al centro de masa del brazo
 J_cm=0.0208;                        %kg.m^2     Momento de inercia del brazo
 L_l = 0.5;                          %m          Longitud total del brazo
-m_l = 1.4;%%%%                        %kg         Puede variar entre 0 y 1.5kg, masa que recoge el brazo
+m_l = 0;%%%%                        %kg         Puede variar entre 0 y 1.5kg, masa que recoge el brazo
 J_l=(m*(L_cm^2)+J_cm)+m_l*(L_l^2);  %kg.m^2     Momento de inercia total del brazo mas la carga
 k_l = m * L_cm + m_l * L_l;         %kg.m       Constante para calcular momento debido al peso del brazo y de la carga
 %T_ld = 2.5;  (Ver especificaciones de operación)
@@ -102,3 +102,6 @@ K_ai=J_eq*w_n_PID^3;
 K_obs_theta=6400;
 K_obs_w=10240000;
 
+K_obs_theta2=9600;
+K_obs_w2=30720000;
+K_obs_i=3.2768*10^10;
