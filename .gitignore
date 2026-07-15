@@ -1,0 +1,14 @@
+# Archivos temporales de autoguardado de MATLAB
+*.asv
+
+# Archivos de autoguardado de Simulink
+*.slx.autosave
+*.mdl.autosave
+
+# Archivos temporales de MATLAB
+*.m~
+octave-workspace
+
+# Archivos de sistema
+Thumbs.db
+.DS_Store
