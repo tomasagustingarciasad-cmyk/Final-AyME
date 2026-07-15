@@ -80,7 +80,7 @@ Ismax = 2;                          %A          Corriente máxima (corta duraci�
 Tsmax = 115;                        %°C         Tenperatura maxima
 %Rango de temperatura ambiente −15°𝐶≤𝑇𝑎𝑚𝑏° (𝑡)≤40°C
 Vslmax = 48;                        %V          Módulo de tensión de línea máximo
-Vsat = Vslmax * sqrt(2) / sqrt(3);  %V          Limite de saturación
+Vsat = Vslmax * (sqrt(2) / sqrt(3));  %V          Limite de saturación
 femax = 330;                        %Hz         Frecuencia síncrona máxima (rango de -330 a 330)
 
 %Lazo de control
@@ -93,9 +93,9 @@ R_0=4;
 w_n_PID=800;
 zeta_PID=0.75;
 
-b_a=J_eq*(2*zeta_PID+1)*w_n_PID;
-K_a=J_eq*(2*zeta_PID+1)*w_n_PID^2;
-K_ai=J_eq*w_n_PID^3;
+b_a=J_nom*(2*zeta_PID+1)*w_n_PID;
+K_a=J_nom*(2*zeta_PID+1)*w_n_PID^2;
+K_ai=J_nom*w_n_PID^3;
 
 %Observador
 
@@ -111,3 +111,10 @@ w_n_sens_pos = 3*2000;
 w_n_sens_corr = 3*6000;
 Tau_sens_temp = 0.5;
 zeta_sens=1;
+
+
+w_n_modulador =3* 6000;
+zeta_mod = 1;
+
+
+T_sdis=6*10^-5;
